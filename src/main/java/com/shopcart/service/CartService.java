@@ -93,9 +93,11 @@ public class CartService {
     }
 
     private Cart findCart(Long cartId) {
-        return cartRepository.findById(cartId)
+        return cartRepository.findByIdWithItems(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found: " + cartId));
     }
+    //return cartRepository.findById(cartId)
+
 
     private void checkOwner(Cart cart, Long userId) {
         if (!cart.getOwner().getId().equals(userId)) {

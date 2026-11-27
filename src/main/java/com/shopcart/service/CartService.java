@@ -92,6 +92,7 @@ public class CartService {
         return new CheckoutResponse(cart.getId(), total, units);
     }
 
+    @Transactional(readOnly =  true)
     private Cart findCart(Long cartId) {
         return cartRepository.findByIdWithItems(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found: " + cartId));

@@ -154,11 +154,3 @@ check that the `insert` / `update` / `delete` you expect really appears.
 - After "success" responses, check the database. A 200 does not prove the data was saved.
 - Restart the app between experiments to reset the data.
 
-## 12. When you finish
-
-For every bug send:
-1. The **symptom** you observed
-2. The **root cause** (file / method and why it happens)
-3. Your **fix**
-
-and I will review it like a backend debugging interviewer.

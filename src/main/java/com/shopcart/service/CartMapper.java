@@ -19,7 +19,7 @@ public final class CartMapper {
                 .toList();
 
         BigDecimal total = cart.getItems().stream()
-                .map(i -> i.getProduct().getPrice())
+                .map(i -> i.getProduct().getPrice().multiply(BigDecimal.valueOf(i.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return new CartResponse(cart.getId(), cart.getOwner().getId(), items, total);

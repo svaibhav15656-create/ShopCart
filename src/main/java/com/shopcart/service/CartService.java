@@ -44,7 +44,7 @@ public class CartService {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found: " + productId));
-
+        if(!isProductInCart(cart, productId)){
         CartItem item = new CartItem();
         item.setCart(cart);
         item.setProduct(product);
@@ -52,6 +52,13 @@ public class CartService {
         cartItemRepository.save(item);
 
         cart.getItems().add(item);
+        }else{
+            for(CartItem line : cart.getItems()){
+                if(line.getProduct().getId().equals(productId)){
+                    line.setQuantity(line.getQuantity()+quantity);
+                }
+            }
+        }
         return CartMapper.toResponse(cart);
     }
 
@@ -104,5 +111,9 @@ public class CartService {
         if (!cart.getOwner().getId().equals(userId)) {
             throw new UnauthorizedException("You do not own this cart");
         }
+    }
+    private boolean isProductInCart(Cart cart, Long productId){
+        return cart.getItems().stream()
+        .anyMatch(line -> line.getProduct().getId().equals(productId));
     }
 }
